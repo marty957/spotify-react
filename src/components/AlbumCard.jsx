@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Col, Image, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addToThePlayer } from "../redux/action";
+import { addToFav, addToThePlayer } from "../redux/action";
+import { FaRegHeart } from "react-icons/fa";
 
 const AlbumCard = (props) => {
   const [songs, setSongs] = useState([]);
@@ -41,9 +42,10 @@ const AlbumCard = (props) => {
     <>
       {songs.length > 0 &&
         songs.slice(0, 4).map((song) => (
-          <Col key={song.album.id} onClick={() => dispatch(addToThePlayer(song))}>
-            <Image src={song.album.cover_medium} className="img-fluid" />
+          <Col key={song.album.id}>
+            <Image src={song.album.cover_medium} className="img-fluid" onClick={() => dispatch(addToThePlayer(song))} />
             <p className="text-center">
+              <FaRegHeart style={{ fontSize: "2rem" }} className="my-1" onClick={() => dispatch(addToFav(song))} /> <br />
               Track: {song.title}
               <br />
               Artist:{song.artist.name}

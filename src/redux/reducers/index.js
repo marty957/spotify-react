@@ -1,7 +1,8 @@
-import { ADD_TO_PLAYER } from "../action";
+import { ADD_TO_FAV, ADD_TO_PLAYER } from "../action";
 
 const initialState = {
-  currentSong: {}
+  currentSong: {},
+  content: []
 };
 
 const mainReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const mainReducer = (state = initialState, action) => {
       return {
         ...state,
         currentSong: action.payload
+      };
+    case ADD_TO_FAV:
+      return {
+        ...state,
+        content: [...state.content, action.payload]
       };
 
     default:
