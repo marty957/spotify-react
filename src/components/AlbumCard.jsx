@@ -7,8 +7,13 @@ import { FaRegHeart } from "react-icons/fa";
 const AlbumCard = (props) => {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isFavorited, setIsFavorited] = useState(false);
 
   const dispatch = useDispatch();
+  const handleclick = (song) => {
+    dispatch(addToFav(song));
+    setIsFavorited(!isFavorited);
+  };
 
   const fillMusic = () => {
     fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${props.artist}`)
@@ -45,7 +50,7 @@ const AlbumCard = (props) => {
           <Col key={song.album.id}>
             <Image src={song.album.cover_medium} className="img-fluid" onClick={() => dispatch(addToThePlayer(song))} />
             <p className="text-center">
-              <FaRegHeart style={{ fontSize: "2rem" }} className="my-1" onClick={() => dispatch(addToFav(song))} /> <br />
+              <FaRegHeart className="heart" style={{ fontSize: "2rem", color: isFavorited ? "red" : "white" }} onClick={() => handleclick(song)} /> <br />
               Track: {song.title}
               <br />
               Artist:{song.artist.name}
